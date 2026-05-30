@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sitio Cafe</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/x-icon" href="C:\Users\jhana\Downloads\html\favicon.ico">
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      background:#f8f5f1;
+      overflow-x:hidden;
+      color:#3b2b24;
+    }
+
+    :root{
+      --coffee:#6f4e37;
+      --light:#f3e3d3;
+      --dark:#2b1d16;
+      --white:#ffffff;
+    }
+
+    /* NAVBAR */
+
+    header{
+      position:fixed;
+      top:0;
+      width:100%;
+      z-index:999;
+      background:rgba(255,255,255,.8);
+      backdrop-filter:blur(10px);
+      box-shadow:0 2px 10px rgba(0,0,0,.08);
+    }
+
+    .nav-link{
+      position:relative;
+      transition:.3s;
+    }
+
+    .nav-link::after{
+      content:'';
+      position:absolute;
+      left:0;
+      bottom:-5px;
+      width:0;
+      height:2px;
+      background:var(--coffee);
+      transition:.3s;
+    }
+
+    .nav-link:hover::after{
+      width:100%;
+    }
+    .logo{
+      width:100px;
+      height:auto;
+    }
+
+
+    /* HERO */
+
+    .hero{
+      min-height:100vh;
+      background:
+      linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),
+      url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600&auto=format&fit=crop');
+
+      background-size:cover;
+      background-position:center;
+
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      color:white;
+      padding:20px;
+    }
+
+    .hero h1{
+      font-size:75px;
+      animation:fadeUp 1s ease;
+    }
+
+    .hero p{
+      margin-top:15px;
+      font-size:18px;
+      animation:fadeUp 1.3s ease;
+    }
+
+    .hero a{
+      display:inline-block;
+      margin-top:30px;
+      padding:14px 35px;
+      border-radius:40px;
+      background:var(--coffee);
+      color:white;
+      text-decoration:none;
+      transition:.4s;
+    }
+
+    .hero a:hover{
+      transform:translateY(-5px);
+      background:#523728;
+    }
+
+    section{
+      padding:100px 8%;
+    }
+
+    .title{
+      text-align:center;
+      font-size:40px;
+      margin-bottom:50px;
+      color:var(--coffee);
+    }
+
+    /* FILTER BUTTONS */
+
+    .filters{
+      display:flex;
+      justify-content:center;
+      gap:15px;
+      margin-bottom:50px;
+      flex-wrap:wrap;
+    }
+
+    .filter-btn{
+      padding:12px 25px;
+      border:none;
+      border-radius:30px;
+      background:var(--light);
+      cursor:pointer;
+      font-weight:600;
+      transition:.3s;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover{
+      background:var(--coffee);
+      color:white;
+      transform:translateY(-3px);
+    }
+
+    /* CARDS */
+
+    .menu-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:30px;
+    }
+
+    .card{
+      background:white;
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:0 10px 20px rgba(0,0,0,.08);
+      transition:.5s;
+    }
+
+    .card:hover{
+      transform:translateY(-10px);
+    }
+
+    .card img{
+      width:100%;
+      height:350px;
+      object-fit:cover;
+    }
+
+    .card-content{
+      padding:25px;
+    }
+
+    .card h3{
+      font-size:24px;
+      margin-bottom:10px;
+    }
+
+    .price{
+      color:var(--coffee);
+      font-size:20px;
+      font-weight:700;
+      margin-top:10px;
+    }
+
+    .order-btn{
+      width:100%;
+      margin-top:15px;
+      padding:12px;
+      border:none;
+      border-radius:30px;
+      background:var(--coffee);
+      color:white;
+      cursor:pointer;
+      font-weight:600;
+      transition:.3s;
+    }
+
+    .order-btn:hover{
+      background:#4e3424;
+    }
+
+    /* CART */
+
+    .cart-icon{
+      position:fixed;
+      bottom:30px;
+      right:30px;
+      width:65px;
+      height:65px;
+      border-radius:50%;
+      background:var(--coffee);
+      color:white;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:24px;
+      cursor:pointer;
+      z-index:999;
+      box-shadow:0 5px 15px rgba(0,0,0,.2);
+    }
+
+    #count{
+      position:absolute;
+      top:-5px;
+      right:-5px;
+      width:25px;
+      height:25px;
+      background:red;
+      border-radius:50%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:12px;
+    }
+
+    .cart{
+      position:fixed;
+      top:0;
+      right:-100%;
+      width:350px;
+      height:100vh;
+      background:white;
+      z-index:1000;
+      transition:.5s;
+      padding:20px;
+      overflow-y:auto;
+      box-shadow:-5px 0 20px rgba(0,0,0,.2);
+    }
+
+    .cart.active{
+      right:0;
+    }
+
+    .cart-item{
+      background:#f5f5f5;
+      padding:15px;
+      border-radius:15px;
+      margin-bottom:15px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .checkout-btn{
+      width:100%;
+      margin-top:20px;
+      padding:14px;
+      border:none;
+      border-radius:30px;
+      background:green;
+      color:white;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    /* CHECKOUT */
+
+    .checkout-page{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100vh;
+      background:rgba(0,0,0,.6);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:2000;
+    }
+
+    .checkout-box{
+      background:white;
+      width:90%;
+      max-width:500px;
+      border-radius:25px;
+      padding:30px;
+      animation:pop .4s ease;
+    }
+
+    .checkout-item{
+      display:flex;
+      justify-content:space-between;
+      margin:15px 0;
+      padding-bottom:10px;
+      border-bottom:1px solid #ddd;
+    }
+
+    /* FOOTER */
+
+      footer{
+      background:var(--dark);
+      color:white;
+      text-align:center;
+      padding:50px 20px;
+    }
+
+    .socials{
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      margin-top:25px;
+    }
+
+    .socials a{
+      width:50px;
+      height:50px;
+      border-radius:50%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#ffffff15;
+      color:white;
+      text-decoration:none;
+      font-size:20px;
+      transition:.4s;
+    }
+
+    .socials a:hover{
+      background:var(--coffee);
+      transform:translateY(-5px) rotate(10deg);
+    }
+
+    /* ANIMATION */
+
+    @keyframes fadeUp{
+      from{
+        opacity:0;
+        transform:translateY(40px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    @keyframes pop{
+      from{
+        transform:scale(.7);
+        opacity:0;
+      }
+      to{
+        transform:scale(1);
+        opacity:1;
+      }
+    }
+
+    @media(max-width:768px){
+
+      .hero h1{
+        font-size:45px;
+      }
+
+      .cart{
+        width:100%;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+<header class="py-5 px-10 flex justify-between items-center">
+<h1 class="text-3xl font-bold text-[#6f4e37]">
+<div style="text-align:center;">
+  <img src="C:\Users\jhana\Downloads\html\logobg.jpg" class="logo">
+</div>
+    </h1>
+
+
+    <nav class="hidden md:flex gap-8" style="font-family:poppins">
+      <a href="#" class="nav-link">Home</a>
+      <a href="#menu" class="nav-link">Menu</a>
+      <a href="#about us" class="nav-link">About Us</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+
+  </header>
+
+  <!-- HERO -->
+
+  <section class="hero" style="font-family:lucida handwriting; color:beige;">
+
+    <div>
+
+      <h1>Sitio Cafe</h1>
+
+      <p>
+        Kape't Kwento
+      </p>
+
+      <a href="#menu">
+        Explore Menu
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- MENU -->
+
+  <section id="menu">
+
+    <h2 class="title" style="font-family:verdana;">
+      Our Drinks
+    </h2>
+
+    <!-- FILTER -->
+
+    <div class="filters">
+
+      <button class="filter-btn active" data-filter="all">
+        All
+      </button>
+
+      <button class="filter-btn" data-filter="coffee">
+        Drinks
+      </button>
+
+      <button class="filter-btn" data-filter="snacks">
+        Appetizers
+      </button>
+
+
+    </div>
+
+    <!-- MENU GRID -->
+
+    <div class="menu-grid">
+
+      <!-- COFFEE -->
+
+      <div class="card coffee">
+        <img src="C:\Users\jhana\Downloads\html\seasalt(1).jpg">
+
+        <div class="card-content">
+
+          <h3>Sea Salt</h3>
+
+          <p>Smooth, creamy coffee drink.</p>
+
+          <div class="price">₱130</div>
+
+          <button class="order-btn"
+          data-name="Sea Salt"
+          data-price="130">
+            Order Now
+          </button>
+
+        </div>
+      </div>
+
+	<div class="card coffee">
+        <img src="C:\Users\jhana\Downloads\html\saltedcaramellatte(1).jpg">
+
+        <div class="card-content">
+
+          <h3>Salted Caramel Latte</h3>
+
+          <p>Rich espresso-based drink blended with sweet caramel.</p>
+
+          <div class="price">₱130</div>
+
+          <button class="order-btn"
+          data-name="Salted Caramel Latte"
+          data-price="130">
+            Order Now
+          </button>
+
+        </div>
+      </div>
+
+
+      <div class="card coffee">
+        <img src="C:\Users\jhana\Downloads\html\spanishlatte(1).jpg">
+
+        <div class="card-content">
+
+          <h3>Spanish Latte</h3>
+
+          <p>Creamy espresso drink made with steamed milk and sweetened condensed milk.</p>
+
+          <div class="price">₱130</div>
+
+          <button class="order-btn"
+          data-name="Spanish Latte"
+          data-price="130">
+            Order Now
+          </button>
+
+        </div>
+      </div>
+
+      <div class="card coffee">
+        <img src="C:\Users\jhana\Downloads\html\caramelmacchiato.jpg">
+
+        <div class="card-content">
+
+          <h3>Caramel Macchiato</h3>
+
+          <p>Layered espresso drink with steamed milk, vanilla syrup, and rich caramel drizzle.</p>
+
+          <div class="price">₱130</div>
+
+          <button class="order-btn"
+          data-name="Caramel Macchiato"
+          data-price="130">
+            Order Now
+          </button>
+
+        </div>
+      </div>
+
+      <div class="card coffee">
+        <img src="C:\Users\jhana\Downloads\html\milosaurus(1).jpg">
+
+        <div class="card-content">
+
+          <h3>Milosaurus</h3>
+
+          <p>Rich and chocolatey Milo-based beverage topped with extra Milo powder.</p>
+
+          <div class="price">₱70</div>
+
+          <button class="order-btn"
+          data-name="Milosaurus"
+          data-price="70">
+            Order Now
+          </button>
+
+        </div>
+      </div>
+
+      <div class="card coffee">
+        <img src="C:\Users\jhana\Downloads\html\darkmochalatte(1).jpg">
+
+        <div class="card-content">
+
+          <h3>Dark Mocha Latte</h3>
+
+          <p>Bold espresso drink blended with rich dark chocolate and creamy milk for a deep.</p>
+
+          <div class="price">₱130</div>
+
+          <button class="order-btn"
+          data-name="Dark Mocha Latte"
+          data-price="130">
+            Order Now
+          </button>
+
+        </div>
+      </div>
+
+      <div class="card coffee">
+        <img src="C:\Users\jhana\Downloads\html\matcha(1).jpg">
+
+        <div class="card-content">
+
+          <h3>Matcha</h3>
+
+          <p>Finely ground green tea powder with a smooth, earthy flavor.</p>
+
+          <div class="price">₱130</div>
+
+          <button class="order-btn"
+          data-name="Matcha"
+          data-price="130">
+            Order Now
+          </button>
+
+        </div>
+      </div>
+
+      <!-- SNACKS -->
+
+      <div class="card snacks">
+        <img src="C:\Users\jhana\Downloads\html\fries.jpeg">
+
+        <div class="card-content">
+
+          <h3>Fries</h3>
+
+          <p>Crispy, golden potato strips that are perfectly seasoned and deliciously satisfying as a snack or side dish.</p>
+
+          <div class="price">₱100</div>
+
+          <button class="order-btn"
+          data-name="Fries"
+          data-price="100">
+            Order Now
+          </button>
+
+        </div>
+      </div>
+
+      <div class="card snacks">
+        <img src="C:\Users\jhana\Downloads\html\nachos.jpg">
+
+        <div class="card-content">
+
+          <h3>Nachos</h3>
+
+          <p>Crunchy tortilla chips topped with melted cheese and savory toppings for a bold, flavorful snack perfect for sharing.</p>
+
+          <div class="price">₱100</div>
+
+          <button class="order-btn"
+          data-name="Nachos"
+          data-price="100">
+            Order Now
+          </button>
+
+        </div>
+      </div>
+
+      <div class="card snacks">
+        <img src="C:\Users\jhana\Downloads\html\burgers.jpg">
+
+        <div class="card-content">
+
+          <h3>Burger</h3>
+
+          <p>Juicy patty served in a soft bun with fresh toppings and sauces, creating a classic and satisfying handheld meal.</p>
+
+          <div class="price">₱100</div>
+
+          <button class="order-btn"
+          data-name="Burger"
+          data-price="100">
+            Order Now
+          </button>
+
+        </div>
+      </div>
+
+
+	<div class="card snacks">
+        <img src="C:\Users\jhana\Downloads\html\cookies.jpg">
+
+        <div class="card-content">
+
+          <h3>Cookies</h3>
+
+          <p>Sweet baked snacks usually made from flour, sugar, butter, and eggs.</p>
+
+          <div class="price">₱100</div>
+
+          <button class="order-btn"
+          data-name="Cookies"
+          data-price="100">
+            Order Now
+          </button>
+
+        </div>
+      </div>
+
+<div class="card snacks">
+        <img src="C:\Users\jhana\Downloads\html\cupcake.jpg">
+
+        <div class="card-content">
+
+          <h3>Cupcake</h3>
+
+          <p>Small, individually sized cake that is usually topped with frosting or icing.</p>
+
+          <div class="price">₱100</div>
+
+          <button class="order-btn"
+          data-name="Cupcake"
+          data-price="100">
+            Order Now
+          </button>
+
+        </div>
+      </div>
+
+<div class="card snacks">
+        <img src="C:\Users\jhana\Downloads\html\cake.jpg">
+
+        <div class="card-content">
+
+          <h3>Cake</h3>
+
+          <p>Sweet baked dessert made from ingredients like flour, sugar, eggs, and butter.</p>
+
+          <div class="price">₱100</div>
+
+          <button class="order-btn"
+          data-name="Cake"
+          data-price="100">
+            Order Now
+          </button>
+
+        </div>
+      </div>
+
+  </div>
+
+  </section>
+
+  <!-- CART ICON -->
+
+  <div class="cart-icon" onclick="openCart()">
+
+    <i class="fas fa-shopping-cart"></i>
+
+    <div id="count">0</div>
+
+  </div>
+
+  <!-- CART -->
+
+  <div class="cart" id="cart">
+
+    <div class="flex justify-between items-center mb-5">
+
+      <h2 class="text-2xl font-bold">
+        Your Orders
+      </h2>
+
+      <button onclick="closeCart()" class="text-3xl">
+        ×
+      </button>
+
+    </div>
+
+    <div id="cart-items"></div>
+
+    <h3 class="text-xl font-bold mt-5">
+      Total: ₱<span id="total">0</span>
+    </h3>
+
+    <button class="checkout-btn" onclick="checkout()">
+      Checkout
+    </button>
+
+  </div>
+
+  <!-- CHECKOUT PAGE -->
+
+  <div class="checkout-page" id="checkoutPage">
+
+    <div class="checkout-box">
+
+      <div class="flex justify-between items-center">
+
+        <h2 class="text-2xl font-bold">
+          Purchase Summary
+        </h2>
+
+        <button onclick="closeCheckout()"
+        class="text-3xl">
+          ×
+        </button>
+
+      </div>
+
+      <div id="summary"></div>
+
+      <h3 class="text-xl font-bold mt-5">
+        Total: ₱<span id="summaryTotal">0</span>
+      </h3>
+
+      <button class="checkout-btn mt-5">
+        Confirm Purchase
+      </button>
+
+    </div>
+
+  </div>
+
+<!-- About Section -->
+<section id="about us" class="py-23 px-10" style="background-color: maroon;">
+<div class="container mx-auto max-w-20xl">
+<h2 class="text-5xl font-bold mb-5 text-center section-heading" style="color: white;font-family:impact;">
+About Sitio Cafe
+</h2>
+<div class="bg-white p-8 rounded-3xl shadow-sm">
+<div class="flex flex-col md:flex-row gap-8 items-center">
+<div class="md:w-1/2">
+<div class="aspect-square rounded-2xl overflow-hidden flex items-center justify-center" style="background-color:white ;">
+<img src="C:\Users\jhana\Downloads\html\photo.jpg" width="1500" height="1000">
+</div>
+</div>
+<div class="md:w-1/2">
+<div class="aspect-square rounded-2xl overflow-hidden" style="background-color:white ;">
+<h2 class="text-3xl text-center font-bold mb-4" style="color: brown;">Our Story</h3>
+<p class="mb-4 text-center">
+At Sitio Café, we believe coffee is more than just a drink — it’s comfort, connection, and a moment to slow down.
+Sitio started with a simple idea: to bring the café experience closer to the community. A space where people can relax, share stories, study, work, or simply enjoy a quiet moment with a good cup of coffee.
+From comforting classics to drinks made for every mood, every cup we serve is meant to be part of your story.
+Here at Sitio, it’s all about simple moments, good coffee, and meaningful conversations.
+</p>
+<h2 class="text-3xl text-center font-bold mb-4" style="color: brown;">Vision</h2>
+	<p class="mb-4 text-center">  To become a go-to neighborhood café known not only for good coffee, but also for the comfort, connection, and sense of community it brings — a place where every visit feels familiar, relaxing, and worth coming back to.</p>   
+
+	<h2 class="text-3xl text-center font-bold mb-4" style="color: brown;">Mission</h2>
+	<p class="mb-4 text-center">To serve quality coffee and create a warm, welcoming space where people can slow down, connect, and share meaningful moments. At Sitio Café, we aim to bring comfort closer to the community through every cup, conversation, and experience we serve.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="py-16 px-6" style="background:var(--dark);">
+<div class="container mx-auto max-w-3xl text-center">
+<h2 class="text-4xl font-bold mb-6" style="color: white;">Join the Sitio Cafe</h2>
+<p class="text-white-600 mb-8" style="color: white;">Be the first to know about new brews, exclusive café treats, and cozy moments at Sitio Cafe.</p>
+
+<div class="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
+<input type="email" placeholder="Your email address" class="bg-white border border-gray-200 rounded-full py-3 px-6 flex-grow focus:outline-none focus:ring-2 focus:ring-offset-2" style="focus:ring-color: var(--primary-color);">
+<button class="btn px-8 py-3 text-white" style="background-color: var(--primary-dark);">
+Subscribe</button>
+</div>
+  <!-- FOOTER -->
+
+ <footer id="contact">
+<div style="text-align:center;">
+
+
+    <p class="mt-3">
+      Brgy. Dolores, San Pablo City, Laguna<br>Follow us on social media
+    </p>
+
+    <div class="socials">
+
+      <a href="https://www.facebook.com/SitioKape">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+
+      <a href="https://www.instagram.com/sitio.kape">
+        <i class="fab fa-instagram"></i>
+      </a>
+
+    </div>
+
+    <p class="mt-8 opacity-70">
+      © 2026 Sitio Cafe
+    </p>
+</div>
+</section>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+
+    // FILTER
+
+    const filterBtns =
+    document.querySelectorAll('.filter-btn');
+
+    const cards =
+    document.querySelectorAll('.card');
+
+    filterBtns.forEach(btn=>{
+
+      btn.addEventListener('click',()=>{
+
+        filterBtns.forEach(b=>
+        b.classList.remove('active'));
+
+        btn.classList.add('active');
+
+        const filter =
+        btn.getAttribute('data-filter');
+
+        cards.forEach(card=>{
+
+          if(filter === 'all'){
+            card.style.display='block';
+          }
+
+          else if(card.classList.contains(filter)){
+            card.style.display='block';
+          }
+
+          else{
+            card.style.display='none';
+          }
+
+        });
+
+      });
+
+    });
+
+    // CART
+
+    let cart = [];
+    let total = 0;
+
+    const cartItems =
+    document.getElementById('cart-items');
+
+    const totalEl =
+    document.getElementById('total');
+
+    const countEl =
+    document.getElementById('count');
+
+    const orderBtns =
+    document.querySelectorAll('.order-btn');
+
+    orderBtns.forEach(btn=>{
+
+      btn.addEventListener('click',()=>{
+
+        const name =
+        btn.getAttribute('data-name');
+
+        const price =
+        Number(btn.getAttribute('data-price'));
+
+        cart.push({name,price});
+
+        total += price;
+
+        updateCart();
+
+        openCart();
+
+      });
+
+    });
+
+    function updateCart(){
+
+      cartItems.innerHTML='';
+
+      cart.forEach((item,index)=>{
+
+        cartItems.innerHTML += `
+
+          <div class="cart-item">
+
+            <div>
+              <h4>${item.name}</h4>
+              <p>₱${item.price}</p>
+            </div>
+
+            <button onclick="removeItem(${index})"
+            class="text-red-500">
+              Remove
+            </button>
+
+          </div>
+
+        `;
+
+      });
+
+      totalEl.innerText = total;
+      countEl.innerText = cart.length;
+
+    }
+
+    function removeItem(index){
+
+      total -= cart[index].price;
+
+      cart.splice(index,1);
+
+      updateCart();
+
+    }
+
+    function openCart(){
+      document.getElementById('cart')
+      .classList.add('active');
+    }
+
+    function closeCart(){
+      document.getElementById('cart')
+      .classList.remove('active');
+    }
+
+    // CHECKOUT
+
+    function checkout(){
+
+      const summary =
+      document.getElementById('summary');
+
+      summary.innerHTML='';
+
+      cart.forEach(item=>{
+
+        summary.innerHTML += `
+
+          <div class="checkout-item">
+
+            <span>${item.name}</span>
+
+            <span>₱${item.price}</span>
+
+          </div>
+
+        `;
+
+      });
+
+      document.getElementById('summaryTotal')
+      .innerText = total;
+
+      document.getElementById('checkoutPage')
+      .style.display='flex';
+
+    }
+
+    function closeCheckout(){
+
+      document.getElementById('checkoutPage')
+      .style.display='none';
+
+    }
+
+  </script>
+
+</body>
+</html>
